@@ -24,6 +24,53 @@ typedef struct idPinjam {
        struct idPinjam *left, *right;
 } idPinjam;
 
+/*typedef struct bookData {
+	char judul[20];
+	int id;
+	char penerbit[20];
+	char tanggal[20];
+	char author[20];
+	int count;
+} bookData;
+
+
+void readFile(struct bookData *size)
+{
+  FILE *data = fopen("dataBuku.txt", "r");
+
+  while (!(feof(data))
+  {
+    struct bookData semuaBuku;
+
+    fscanf(data, "%[^#]#%i#%[^#]#%[^#]#%[^\n\r]\n", semuaBuku.judul, &semuaBuku.id,
+           semuaBuku.penerbit, semuaBuku.tanggal, semuaBuku.author);
+           
+    size->count++;
+  }
+  
+  fclose(data);
+}
+
+void sorting()
+{
+	int sortBy;
+	
+	printf("=============================\n"
+            "           Sort By\n"
+           "=============================\n"
+            "1. Judul\n"
+            "2. ID\n"
+            "3. Publisher\n"
+            "4. Tanggal Terbit\n"
+            "5. Author\n");
+    printf("Choose : "); scanf("%d", sortBy);
+    
+    if(sortBy == 1)
+    {
+    	
+	}
+}*/
+
 idPinjam *newNode(int id, request *item) {
        idPinjam *temp = ( idPinjam *)malloc(sizeof( idPinjam));
        temp->id = id;
