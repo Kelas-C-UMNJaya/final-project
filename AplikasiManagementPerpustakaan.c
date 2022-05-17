@@ -1,4 +1,4 @@
-// Note : dequeue function setelah di debug ada segmentation fault, perlu diperbaiki.
+
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -84,45 +84,45 @@ void readFile(struct allBook **headBook)
 	fclose(data);
 }
 
-/*void sortJudul()
-{
-	int i, j;
-	struct bookData list = head->buku;
+// void sortJudul()
+// {
+// 	int i, j;
+// 	struct bookData list = head->buku;
 	
-	for(i = 1; i < count; i++)
-	{
-		for(j = count-1; j >= 1; j--)
-		{
-			if(strcmp(list[j].judul, list[j-1].judul) < 0)
-			{
-				struct bookData temp = list[j];
-				list[j] = list[j-1];
-				list[j-1] = temp;
-			}
-		}
-	}
-}
+// 	for(i = 1; i < count; i++)
+// 	{
+// 		for(j = count-1; j >= 1; j--)
+// 		{
+// 			if(strcmp(list[j].judul, list[j-1].judul) < 0)
+// 			{
+// 				struct bookData temp = list[j];
+// 				list[j] = list[j-1];
+// 				list[j-1] = temp;
+// 			}
+// 		}
+// 	}
+// }
 
-void sorting()
-{
-	int sortBy;
-	readFile(&head);
+// void sorting()
+// {
+// 	int sortBy;
+// 	readFile(&head);
 	
-	printf("=============================\n"
-            "           Sort By\n"
-           "=============================\n"
-            "1. Judul\n"
-            "2. ID\n"
-            "3. Publisher\n"
-            "4. Tanggal Terbit\n"
-            "5. Author\n");
-    printf("Choose : "); scanf("%d", sortBy);
+// 	printf("=============================\n"
+//             "           Sort By\n"
+//            "=============================\n"
+//             "1. Judul\n"
+//             "2. ID\n"
+//             "3. Publisher\n"
+//             "4. Tanggal Terbit\n"
+//             "5. Author\n");
+//     printf("Choose : "); scanf("%d", sortBy);
     
-    if(sortBy == 1)
-    {
+//     if(sortBy == 1)
+//     {
     	
-	}
-}*/
+// 	}
+// }
 
 idPinjam *newNode(int id, request *item) {
        idPinjam *temp = ( idPinjam *)malloc(sizeof( idPinjam));
@@ -176,13 +176,14 @@ void dequeue(request **head){
        free(temp);
 }
 
-/*void approve(request **head, idPinjam **root, int idCount){
-       
+void approve(request **head, idPinjam **root, int idCount){
+       int choice;
        while (*head != NULL) {
+              choice = NULL;
               printf("%s\n", (*head)->peminjam);
               printf("%s\n", (*head)->kontak);
               printf("%s\n", (*head)->judul);
-              int choice;
+              
               
               while (choice != 1 && choice != 2) {
                      printf("Status:\n"
@@ -195,11 +196,11 @@ void dequeue(request **head){
                                    idCount++;
                                    insert(*root, idCount, *head);
                                    printf("Request Approved\n");
-                                   dequeue(*head);
+                                   dequeue(head);
                                    break;
                             case 2:
                                    printf("Request Rejected\n");
-                                   dequeue(*head);
+                                   dequeue(head);
                                    break;
                             default:
                                    printf("Input salah\n");
@@ -209,7 +210,7 @@ void dequeue(request **head){
 
                                    
        }
-}*/
+}
 
 
 
@@ -259,7 +260,7 @@ int main(int argc, char *argv[])
                      pinjam(&head, &tail);
                      break;
               case 4:
-                     //approve(&head, &root, idCount);
+                     approve(&head, &root, idCount);
                      break;
               case 5:
                      break;
