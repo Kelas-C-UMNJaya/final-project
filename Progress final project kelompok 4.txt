@@ -1,0 +1,128 @@
+Nama Anggota :
+Leonardo Jonathan Fernandez Namlay (00000058084)
+Andrew Thomas Agustinus(00000059999)
+Adhy Ardana Setyawan (00000059569)
+Muhammad Rajja Farabi (00000059846)
+Kevin Andreli (00000058005)
+
+Progress report :
+1. menambahkan fungsi request peminjaman buku (request akan disimpan dalam bentuk queue)
+2. menambahkan fungsi approve/deny request peminjaman (mulai dari awal queue sampai isi queue habis)
+3. menambahkan fungsi pemberian deadline 14 hari setelah approve request peminjaman menggunakan time dan date dari system.
+4. Membentuk tree yang menyimpan id dan data peminjam dan buku yang dipinjam setelah di approve.
+5. revisi bentuk UI sebelumnya.
+
+Sedang in progress :
+1. fungsi sort
+2. fungsi search
+3. fungsi pengembalian buku
+4. file processing
+5. memperbaiki fungsi dequeue
+
+potongan kode yang ditambahkan :
+typedef struct request {
+       char peminjam[20];
+       char kontak[20];
+       char judul[20];
+       char status[20];
+       struct request *next;
+} request;
+
+typedef struct idPinjam {
+       int id;
+       char judul[20];
+       char status[20];
+       char kontak[20];
+       char peminjam[20];
+       char tanggal[20];
+       char deadline[20];
+       struct idPinjam *left, *right;
+} idPinjam;
+
+idPinjam *newNode(int id, request *item) {
+       idPinjam *temp = ( idPinjam *)malloc(sizeof( idPinjam));
+       temp->id = id;
+       strcpy(temp->judul, item->judul);
+       strcpy(temp->status, "sedang dipinjam");
+       strcpy(temp->kontak, item->kontak);
+       strcpy(temp->peminjam, item->peminjam);
+       time_t t = time(NULL);
+       struct tm tm = *localtime(&t);
+       strftime(temp->tanggal, sizeof(temp->tanggal), "%d-%m-%Y", &tm);
+       printf("Tanggal peminjaman: %s\n", temp->tanggal);
+       tm.tm_mday += 14;
+       strftime(temp->deadline, sizeof(temp->deadline), "%d-%m-%Y", &tm);
+       printf("Deadline: %s\n", temp->deadline);
+       
+       temp->left = temp->right = NULL;
+       return temp;
+}
+
+idPinjam *insert( idPinjam *node, int id, request* curr) {
+    if (node == NULL) return newNode(id, curr);
+    if (id < node->id)
+        node->left = insert(node->left, id, curr);
+    else if (id > node->id)
+        node->right = insert(node->right,  id, curr);
+    return node;
+}
+void pinjam(request **head , request **tail){
+       request *newQueue = (request *)malloc(sizeof(request));
+       printf("Masukkan nama peminjam: ");
+       scanf("%s", newQueue->peminjam);
+       printf("Masukkan kontak peminjam: ");
+       scanf("%s", newQueue->kontak);
+       printf("Masukkan judul buku: ");
+       scanf("%s", newQueue->judul);
+       strcpy(newQueue->status, "pending");
+       newQueue->next = NULL;
+       if (*head == NULL) {
+              *head = newQueue;
+              *tail = newQueue;
+       } else {
+              (*tail)->next = newQueue;
+              *tail = newQueue;
+       }
+}
+
+void dequeue(request **head){
+       request *temp = *head;
+       *head = (*head)->next; // Note : dequeue function setelah di debug ada segmentation fault, perlu diperbaiki.
+       free(temp);
+}
+
+void approve(request **head, idPinjam **root, int idCount){
+       
+       while (*head != NULL) {
+              printf("%s\n", (*head)->peminjam);
+              printf("%s\n", (*head)->kontak);
+              printf("%s\n", (*head)->judul);
+              int choice;
+              
+              while (choice != 1 && choice != 2) {
+                     printf("Status:\n"
+                     "1. Approve\n"
+                     "2. Reject\n");
+              
+                     scanf("%d", &choice);
+                     switch (choice) {
+                            case 1:
+                                   idCount++;
+                                   insert(*root, idCount, *head);
+                                   printf("Request Approved\n");
+                                   dequeue(*head);
+                                   break;
+                            case 2:
+                                   printf("Request Rejected\n");
+                                   dequeue(*head);
+                                   break;
+                            default:
+                                   printf("Input salah\n");
+                                   break;
+                     }
+              }
+
+                                   
+       }
+}
+
