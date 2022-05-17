@@ -1,5 +1,3 @@
-
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -56,7 +54,7 @@ void readFile(struct allBook **headBook)
 
 		fscanf(data, "%[^#]#%[^#]#%[^#]#%[^#]#%[^\n\r]\n", semuaBuku.judul, &semuaBuku.id,
            semuaBuku.penerbit, semuaBuku.tanggal, semuaBuku.author);
-           
+
         if(*headBook == NULL)
 		{
 			link->buku = semuaBuku;
@@ -66,7 +64,7 @@ void readFile(struct allBook **headBook)
 		else
 		{
 			struct allBook *tempNode = *headBook;
-	
+
 			while(tempNode->next != NULL)
 			{
 				tempNode = tempNode->next;
@@ -74,13 +72,13 @@ void readFile(struct allBook **headBook)
 			link->buku = semuaBuku;
 			link->next = tempNode;
 		}
-		
+
 		printf("| %-25s | %-20s | %-15s | %-20s | %-15s |\n", semuaBuku.judul, semuaBuku.id,
            semuaBuku.penerbit, semuaBuku.tanggal, semuaBuku.author);
-           
+
     	//count++;
 	}
-  
+
 	fclose(data);
 }
 
@@ -88,7 +86,7 @@ void readFile(struct allBook **headBook)
 // {
 // 	int i, j;
 // 	struct bookData list = head->buku;
-	
+
 // 	for(i = 1; i < count; i++)
 // 	{
 // 		for(j = count-1; j >= 1; j--)
@@ -107,7 +105,7 @@ void readFile(struct allBook **headBook)
 // {
 // 	int sortBy;
 // 	readFile(&head);
-	
+
 // 	printf("=============================\n"
 //             "           Sort By\n"
 //            "=============================\n"
@@ -117,10 +115,10 @@ void readFile(struct allBook **headBook)
 //             "4. Tanggal Terbit\n"
 //             "5. Author\n");
 //     printf("Choose : "); scanf("%d", sortBy);
-    
+
 //     if(sortBy == 1)
 //     {
-    	
+
 // 	}
 // }
 
@@ -138,7 +136,7 @@ idPinjam *newNode(int id, request *item) {
        tm.tm_mday += 14;
        strftime(temp->deadline, sizeof(temp->deadline), "%d-%m-%Y", &tm);
        printf("Deadline: %s\n", temp->deadline);
-       
+
        temp->left = temp->right = NULL;
        return temp;
 }
@@ -183,13 +181,13 @@ void approve(request **head, idPinjam **root, int idCount){
               printf("%s\n", (*head)->peminjam);
               printf("%s\n", (*head)->kontak);
               printf("%s\n", (*head)->judul);
-              
-              
+
+
               while (choice != 1 && choice != 2) {
                      printf("Status:\n"
                      "1. Approve\n"
                      "2. Reject\n");
-              
+
                      scanf("%d", &choice);
                      switch (choice) {
                             case 1:
@@ -208,7 +206,7 @@ void approve(request **head, idPinjam **root, int idCount){
                      }
               }
 
-                                   
+
        }
 }
 
@@ -239,7 +237,52 @@ int menu () {
        return menu;
 }
 
-
+void search(){
+	printf("=============================\n");
+	printf("           Search \n");
+	printf("=============================\n");
+	
+	int found = 0;
+	char scr[100];
+	printf("Input idword : ");
+   	scanf("%99s", scr);
+   	printf("=============================\n");
+   	
+	FILE *fp = fopen("dataBuku.txt", "r");
+      if(fp == NULL) {
+          perror("Unable to open file!");
+          exit(1);
+      }
+ 
+     char chunk[128];
+     char *token;
+     unsigned count = 0;
+ 
+     while(fgets(chunk, sizeof(chunk), fp) != NULL) {
+     	if(strstr(chunk, scr) != NULL) {
+     		token = strtok(chunk,"#");
+         	//fputs(chunk, stdout);
+         	while(token != NULL)
+        	{
+				if(count==0){ printf("ID             : %s \n",token); }
+				if(count==1){ printf("Nama           : %s \n",token); }
+				if(count==2){ printf("Penerbit       : %s \n",token);	}
+				if(count==3){ printf("Tanggal Terbit : %s \n",token);	}
+				if(count==4){ printf("Author         : %s \n",token);	}
+								
+                token = strtok(NULL,"#");
+                count++;
+        	}
+        	printf("\n");
+    	}
+    	
+    	count = 0;
+     }
+ 
+     fclose(fp);
+     
+     printf("\n");
+}
 
 
 int main(int argc, char *argv[])
@@ -247,16 +290,17 @@ int main(int argc, char *argv[])
        idPinjam *root = NULL;
        int idCount = 0;
        request *head = NULL, *tail = NULL;
-       
-       
+
+
        while (1) {
               switch (menu()) {
               case 1:
               		readFile(&headBook);
                      break;
               case 2:
+              		search();
                      break;
-              case 3:       
+              case 3:
                      pinjam(&head, &tail);
                      break;
               case 4:
