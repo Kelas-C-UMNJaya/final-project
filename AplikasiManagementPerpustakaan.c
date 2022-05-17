@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+#include <stdbool.h>
 
 typedef struct request {
        char peminjam[20];
@@ -24,36 +25,88 @@ typedef struct idPinjam {
        struct idPinjam *left, *right;
 } idPinjam;
 
-/*typedef struct bookData {
+
+typedef struct bookData {
 	char judul[20];
-	int id;
+	char id[10];
 	char penerbit[20];
 	char tanggal[20];
 	char author[20];
-	int count;
 } bookData;
 
+typedef struct allBook {
+	struct bookData buku;
+	struct allBook *next;
+} allBook;
 
-void readFile(struct bookData *size)
+struct allBook *headBook = NULL;
+struct allBook *curr = NULL;
+//struct allBook input[];
+
+int count = 0;
+
+void readFile(struct allBook **headBook)
 {
-  FILE *data = fopen("dataBuku.txt", "r");
+	struct allBook *link = (struct allBook*)malloc(sizeof(struct allBook));
+	FILE *data = fopen("dataBuku.txt", "r");
 
-  while (!(feof(data))
-  {
-    struct bookData semuaBuku;
+	while (!(feof(data)))
+	{
+    	struct bookData semuaBuku;
 
-    fscanf(data, "%[^#]#%i#%[^#]#%[^#]#%[^\n\r]\n", semuaBuku.judul, &semuaBuku.id,
+		fscanf(data, "%[^#]#%[^#]#%[^#]#%[^#]#%[^\n\r]\n", semuaBuku.judul, &semuaBuku.id,
            semuaBuku.penerbit, semuaBuku.tanggal, semuaBuku.author);
            
-    size->count++;
-  }
+        if(*headBook == NULL)
+		{
+			link->buku = semuaBuku;
+			link->next = *headBook;
+			*headBook = link;
+		}
+		else
+		{
+			struct allBook *tempNode = *headBook;
+	
+			while(tempNode->next != NULL)
+			{
+				tempNode = tempNode->next;
+			}
+			link->buku = semuaBuku;
+			link->next = tempNode;
+		}
+		
+		printf("| %-25s | %-20s | %-15s | %-20s | %-15s |\n", semuaBuku.judul, semuaBuku.id,
+           semuaBuku.penerbit, semuaBuku.tanggal, semuaBuku.author);
+           
+    	//count++;
+	}
   
-  fclose(data);
+	fclose(data);
+}
+
+/*void sortJudul()
+{
+	int i, j;
+	struct bookData list = head->buku;
+	
+	for(i = 1; i < count; i++)
+	{
+		for(j = count-1; j >= 1; j--)
+		{
+			if(strcmp(list[j].judul, list[j-1].judul) < 0)
+			{
+				struct bookData temp = list[j];
+				list[j] = list[j-1];
+				list[j-1] = temp;
+			}
+		}
+	}
 }
 
 void sorting()
 {
 	int sortBy;
+	readFile(&head);
 	
 	printf("=============================\n"
             "           Sort By\n"
@@ -123,7 +176,7 @@ void dequeue(request **head){
        free(temp);
 }
 
-void approve(request **head, idPinjam **root, int idCount){
+/*void approve(request **head, idPinjam **root, int idCount){
        
        while (*head != NULL) {
               printf("%s\n", (*head)->peminjam);
@@ -156,7 +209,7 @@ void approve(request **head, idPinjam **root, int idCount){
 
                                    
        }
-}
+}*/
 
 
 
@@ -198,6 +251,7 @@ int main(int argc, char *argv[])
        while (1) {
               switch (menu()) {
               case 1:
+              		readFile(&headBook);
                      break;
               case 2:
                      break;
@@ -205,7 +259,7 @@ int main(int argc, char *argv[])
                      pinjam(&head, &tail);
                      break;
               case 4:
-                     approve(&head, &root, idCount);
+                     //approve(&head, &root, idCount);
                      break;
               case 5:
                      break;
@@ -215,14 +269,6 @@ int main(int argc, char *argv[])
                      printf("Pilihan tidak tersedia\n");
               }
        }
-       // printf("=============================\n"
-       //      "           Sort By\n"
-       //     "=============================\n"
-       //     "1. Judul\n"
-       //     "2. ID\n"
-       //     "3. Publisher\n"
-       //     "4. Tanggal Terbit\n"
-       //     "5. Author\n");
 
        // printf("=============================\n"
        //      "           Search\n"
