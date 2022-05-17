@@ -1,2 +1,7 @@
-Algo#B001#Gajah Mada#01/01/2020#Raja
-Becak#B002#Singa#02/02/2020#Ratu
+B001#Algoritma dan Struktur Data#Gajah Mada#01/01/2020#Raja
+B002#Algoritma Bagi Pemula#Gajah Mada#01/01/2020#Dana
+B003#Javascript Programming#Gajah Mada#01/01/2020#Mulya
+B004#PHP Programming#UI#01/01/2020#Adi
+B005#C/C++ Programming#ITB#01/01/2020#Nugraha
+B006#Golang Google#ITB#01/01/2020#Felix
+B007#Becak#Singa#02/02/2020#Ratu
