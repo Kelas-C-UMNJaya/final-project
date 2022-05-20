@@ -11,13 +11,17 @@ Progress report :
 3. menambahkan fungsi pemberian deadline 14 hari setelah approve request peminjaman menggunakan time dan date dari system.
 4. Membentuk tree yang menyimpan id dan data peminjam dan buku yang dipinjam setelah di approve.
 5. revisi bentuk UI sebelumnya.
+1. fungsi sort
+2. fungsi search
+4. file processing
+5. memperbaiki fungsi dequeue
 
 Sedang in progress :
 1. fungsi sort
-2. fungsi search
+	
 3. fungsi pengembalian buku
-4. file processing
-5. memperbaiki fungsi dequeue
+
+
 
 potongan kode yang ditambahkan :
 typedef struct request {
