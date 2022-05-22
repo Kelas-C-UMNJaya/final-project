@@ -44,6 +44,7 @@ struct allBook *curr = NULL;
 //struct allBook input[];
 
 int count = 0;
+int idCount = 0;
 int max(int a, int b);
 idPinjam *insertFile( idPinjam *node, idPinjam newPeminjam, int id);
 idPinjam *newFileNode(int id, idPinjam newPeminjam);
@@ -308,7 +309,7 @@ void readFileDataPeminjam(struct idPinjam **dbPeminjam)
               (*dbPeminjam) = insertFile((*dbPeminjam), newPeminjam, newPeminjam.id);
               // printf("| %-25s | %-20s | %-15s | %-20s | %-15s | %-20s | %-20s |\n", newPeminjam->judul, newPeminjam->id,
               // newPeminjam->status, newPeminjam->kontak, newPeminjam->peminjam, newPeminjam->tanggal, newPeminjam->deadline);
-              count++;
+              idCount++;
 	}
 	fclose(data);
 }
@@ -630,7 +631,7 @@ void printInorder(idPinjam* node)
 int main()
 {
        idPinjam *root = NULL;
-       int idCount = 0;
+       
        request *head = NULL, *tail = NULL;
        readFileDataPeminjam(&root);
        printInorder(root);
