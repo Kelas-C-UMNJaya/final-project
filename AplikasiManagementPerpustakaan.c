@@ -633,6 +633,7 @@ int main()
        int idCount = 0;
        request *head = NULL, *tail = NULL;
        readFileDataPeminjam(&root);
+       readFileDataBuku(&headBook);
        printInorder(root);
        getch();
        
