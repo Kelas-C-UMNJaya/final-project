@@ -82,6 +82,30 @@ void readFile(struct allBook **headBook)
 	fclose(data);
 }
 
+void swap (int *a, int *b)
+{
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+void sortId(struct allBook **headBook)
+{
+       struct allBook *temp = *headBook;
+       int i, j;
+
+       for (i = 0; i < count; i++)
+       {
+              for (j = i + 1; j < count; j++)
+              {
+                     if (temp->buku.id[0] > temp->buku.id[1])
+                     {
+                            swap(&temp->buku.id[0], &temp->buku.id[1]);
+                     }
+              }
+       }
+}
+
 // void sortJudul()
 // {
 // 	int i, j;
@@ -284,7 +308,6 @@ void search(){
      printf("\n");
 }
 
-
 int main(int argc, char *argv[])
 {
        idPinjam *root = NULL;
@@ -296,6 +319,8 @@ int main(int argc, char *argv[])
               switch (menu()) {
               case 1:
               		readFile(&headBook);
+                            sortId(&headBook);
+
                      break;
               case 2:
               		search();
