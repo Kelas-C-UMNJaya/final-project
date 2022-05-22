@@ -634,6 +634,7 @@ int main()
        
        request *head = NULL, *tail = NULL;
        readFileDataPeminjam(&root);
+       readFileDataBuku(&headBook);
        printInorder(root);
        getch();
        
