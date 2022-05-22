@@ -25,11 +25,12 @@ typedef struct idPinjam {
 
 
 typedef struct bookData {
-	char judul[20];
-	char id[10];
-	char penerbit[20];
-	char tanggal[20];
-	char author[20];
+	char judul[50];
+	char id[50];
+	char penerbit[50];
+	char tanggal[50];
+	char author[50];
+	char status[50];
 } bookData;
 
 typedef struct allBook {
@@ -45,16 +46,16 @@ int count = 0;
 
 void readFile(struct allBook **headBook)
 {
-	struct allBook *link = (struct allBook*)malloc(sizeof(struct allBook));
+	struct bookData semuaBuku;
 	FILE *data = fopen("dataBuku.txt", "r");
 
 	while (!(feof(data)))
 	{
-    	struct bookData semuaBuku;
+		struct allBook *link = (struct allBook*)malloc(sizeof(struct allBook));
 
-		fscanf(data, "%[^#]#%[^#]#%[^#]#%[^#]#%[^\n\r]\n", semuaBuku.judul, &semuaBuku.id,
-           semuaBuku.penerbit, semuaBuku.tanggal, semuaBuku.author);
-
+		fscanf(data, "%[^#]# %[^#]# %[^#]# %[^#]# %[^#]# %[^\n\r]\n", semuaBuku.id, semuaBuku.judul,
+           semuaBuku.penerbit, semuaBuku.tanggal, semuaBuku.author, semuaBuku.status);
+           
         if(*headBook == NULL)
 		{
 			link->buku = semuaBuku;
@@ -70,81 +71,214 @@ void readFile(struct allBook **headBook)
 				tempNode = tempNode->next;
 			}
 			link->buku = semuaBuku;
-			link->next = tempNode;
+			link->next = *headBook;
+			*headBook = link;
 		}
-
-		printf("| %-25s | %-20s | %-15s | %-20s | %-15s |\n", semuaBuku.judul, semuaBuku.id,
-           semuaBuku.penerbit, semuaBuku.tanggal, semuaBuku.author);
-
-    	//count++;
 	}
 
 	fclose(data);
 }
 
-void swap (int *a, int *b)
+void swap(struct allBook *a, struct allBook *b)
 {
-    int temp = *a;
-    *a = *b;
-    *b = temp;
+	struct bookData temp = a->buku;
+	a->buku = b->buku;
+	b->buku = temp;
 }
 
-void sortId(struct allBook **headBook)
+void sortJudul()
 {
-       struct allBook *temp = *headBook;
-       int i, j;
-
-       for (i = 0; i < count; i++)
-       {
-              for (j = i + 1; j < count; j++)
-              {
-                     if (temp->buku.id[0] > temp->buku.id[1])
-                     {
-                            swap(&temp->buku.id[0], &temp->buku.id[1]);
-                     }
-              }
-       }
+	int swapped;
+	struct allBook *ptr1 = NULL;
+	struct allBook *lptr = NULL;
+	
+	do
+    {
+        swapped = 0;
+        ptr1 = headBook;
+  
+        while (ptr1->next != lptr)
+        {
+            if(strcmp(ptr1->buku.judul, ptr1->next->buku.judul) > 0)
+            { 
+                swap(ptr1, ptr1->next);
+                swapped = 1;
+            }
+            ptr1 = ptr1->next;
+        }
+        lptr = ptr1;
+    }
+    while (swapped);
 }
 
-// void sortJudul()
-// {
-// 	int i, j;
-// 	struct bookData list = head->buku;
+void sortID(struct allBook *headBook)
+{
+	int swapped;
+	struct allBook *ptr1 = NULL;
+	struct allBook *lptr = NULL;
+	
+	do
+    {
+        swapped = 0;
+        ptr1 = headBook;
+  
+        while (ptr1->next != lptr)
+        {
+            if(strcmp(ptr1->buku.id, ptr1->next->buku.id) > 0)
+            { 
+                swap(ptr1, ptr1->next);
+                swapped = 1;
+            }
+            ptr1 = ptr1->next;
+        }
+        lptr = ptr1;
+    }
+    while (swapped);
+}
 
-// 	for(i = 1; i < count; i++)
-// 	{
-// 		for(j = count-1; j >= 1; j--)
-// 		{
-// 			if(strcmp(list[j].judul, list[j-1].judul) < 0)
-// 			{
-// 				struct bookData temp = list[j];
-// 				list[j] = list[j-1];
-// 				list[j-1] = temp;
-// 			}
-// 		}
-// 	}
-// }
+void sortPublisher(struct allBook *headBook)
+{
+	int swapped;
+	struct allBook *ptr1;
+	struct allBook *lptr = NULL;
+	
+	do
+    {
+        swapped = 0;
+        ptr1 = headBook;
+  
+        while (ptr1->next != lptr)
+        {
+            if(strcmp(ptr1->buku.penerbit, ptr1->next->buku.penerbit) > 0)
+            { 
+                swap(ptr1, ptr1->next);
+                swapped = 1;
+            }
+            ptr1 = ptr1->next;
+        }
+        lptr = ptr1;
+    }
+    while (swapped);
+}
 
-// void sorting()
-// {
-// 	int sortBy;
-// 	readFile(&head);
+void sortTerbit(struct allBook *headBook)
+{
+	int swapped;
+	struct allBook *ptr1;
+	struct allBook *lptr = NULL;
+	
+	do
+    {
+        swapped = 0;
+        ptr1 = headBook;
+  
+        while (ptr1->next != lptr)
+        {
+            if(strcmp(ptr1->buku.tanggal, ptr1->next->buku.tanggal) > 0)
+            { 
+                swap(ptr1, ptr1->next);
+                swapped = 1;
+            }
+            ptr1 = ptr1->next;
+        }
+        lptr = ptr1;
+    }
+    while (swapped);
+}
 
-// 	printf("=============================\n"
-//             "           Sort By\n"
-//            "=============================\n"
-//             "1. Judul\n"
-//             "2. ID\n"
-//             "3. Publisher\n"
-//             "4. Tanggal Terbit\n"
-//             "5. Author\n");
-//     printf("Choose : "); scanf("%d", sortBy);
+void sortAuthor(struct allBook *headBook)
+{
+	int swapped;
+	struct allBook *ptr1;
+	struct allBook *lptr = NULL;
+	
+	do
+    {
+        swapped = 0;
+        ptr1 = headBook;
+  
+        while (ptr1->next != lptr)
+        {
+            if(strcmp(ptr1->buku.author, ptr1->next->buku.author) > 0)
+            { 
+                swap(ptr1, ptr1->next);
+                swapped = 1;
+            }
+            ptr1 = ptr1->next;
+        }
+        lptr = ptr1;
+    }
+    while (swapped);
+}
 
-//     if(sortBy == 1)
-//     {
+void printSort()
+{
+	curr = headBook;
+	printf("\n");
+	printf("==================================================================================================\n");
+	printf("|                                          DATA BUKU                                             | \n");
+	printf("==================================================================================================\n");
+	
+	while(curr != NULL)
+	{
+		struct bookData hasil = curr->buku;
+		
+		printf("| %s | %-30s | %-10s | %-10s | %-10s | %-15s |\n", hasil.id, hasil.judul,
+           hasil.penerbit, hasil.tanggal, hasil.author, hasil.status);
+        
+        curr = curr->next;
+	}
+	
+	printf("--------------------------------------------------------------------------------------------------\n");
+	printf("\n");
+	getch();
+}
 
-// 	}
-// }
+void sorting()
+{
+	system("cls");
+	int sortBy;
+
+	printf("=============================\n"
+            "           Sort By\n"
+            "=============================\n"
+             "1. Judul\n"
+             "2. ID\n"
+             "3. Publisher\n"
+             "4. Tanggal Terbit\n"
+             "5. Author\n");
+	printf("Choose : "); scanf("%d", &sortBy);
+
+	if(sortBy == 1)
+	{
+		sortJudul();
+		printSort();
+	}
+	else if (sortBy == 2)
+	{
+		sortID(headBook);
+		printSort();
+	}
+	else if (sortBy == 3)
+	{
+		sortPublisher(headBook);
+		printSort();
+	}
+	else if (sortBy == 4)
+	{
+		sortTerbit(headBook);
+		printSort();
+	}
+	else if (sortBy == 5)
+	{
+		sortAuthor(headBook);
+		printSort();
+	}
+	else
+	{
+		printf("\nINVALID!");
+	}
+}
 
 idPinjam *newNode(int id, request *item) {
        idPinjam *temp = ( idPinjam *)malloc(sizeof( idPinjam));
