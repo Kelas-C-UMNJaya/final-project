@@ -14,12 +14,13 @@ typedef struct request {
 
 typedef struct idPinjam {
        int id;
-       char judul[20];
+       char judul[50];
        char status[20];
        char kontak[20];
        char peminjam[20];
        char tanggal[20];
        char deadline[20];
+       int height;
        struct idPinjam *left, *right;
 } idPinjam;
 
@@ -43,8 +44,15 @@ struct allBook *curr = NULL;
 //struct allBook input[];
 
 int count = 0;
+int max(int a, int b);
+idPinjam *insertFile( idPinjam *node, idPinjam newPeminjam, int id);
+idPinjam *newFileNode(int id, idPinjam newPeminjam);
+idPinjam* leftRotate(idPinjam *x);
+idPinjam* rightRotate(idPinjam *y);
+int getBalance(idPinjam *N);
+int height(idPinjam *N);
 
-void readFile(struct allBook **headBook)
+void readFileDataBuku(struct allBook **headBook)
 {
 	struct bookData semuaBuku;
 	FILE *data = fopen("dataBuku.txt", "r");
@@ -280,6 +288,86 @@ void sorting()
 	}
 }
 
+
+void readFileDataPeminjam(struct idPinjam **dbPeminjam)
+{
+	FILE *data = fopen("dataPeminjam.txt", "r");
+
+	while (!(feof(data)))
+	{
+              idPinjam newPeminjam;
+    	       //idPinjam *newPeminjam = ( idPinjam *)malloc(sizeof( idPinjam));
+              // fscanf(data, "%d[^#]\n", &newPeminjam.id);
+              
+              fscanf(data, "%[^#]#%[^#]#%[^#]#%[^#]#%[^#]#%[^#]#%d[^\n\r]\n",   newPeminjam.judul,
+              newPeminjam.status, newPeminjam.kontak, newPeminjam.peminjam, newPeminjam.tanggal, newPeminjam.deadline, &newPeminjam.id);
+		// fscanf(data, "%d[^#]#%[^#]#%[^#]#%[^#]#%[^#]#%[^#]#%[^\n\r]\n",  &newPeminjam->id, newPeminjam->judul,
+              // newPeminjam->status, newPeminjam->kontak, newPeminjam->peminjam, newPeminjam->tanggal, newPeminjam->deadline);
+              // newPeminjam->height = 0;
+              // newPeminjam->left = newPeminjam->right = NULL;
+              (*dbPeminjam) = insertFile((*dbPeminjam), newPeminjam, newPeminjam.id);
+              // printf("| %-25s | %-20s | %-15s | %-20s | %-15s | %-20s | %-20s |\n", newPeminjam->judul, newPeminjam->id,
+              // newPeminjam->status, newPeminjam->kontak, newPeminjam->peminjam, newPeminjam->tanggal, newPeminjam->deadline);
+              count++;
+	}
+	fclose(data);
+}
+
+idPinjam *insertFile( idPinjam *node, idPinjam newPeminjam, int id) {
+       
+       if (node == NULL) return newFileNode(id, newPeminjam);
+       if (id < node->id)
+              node->left = insertFile(node->left, newPeminjam, id);
+       else if (id > node->id)
+              node->right = insertFile(node->right, newPeminjam, id);
+       else
+              return node;
+
+       node->height = height(node);
+
+       int balance = getBalance(node);
+
+       // Left Left Case
+       if (balance > 1 && id < node->left->id)
+           return rightRotate(node);
+
+       // Right Right Case
+       if (balance < -1 && id > node->right->id)
+           return leftRotate(node);
+
+       // Left Right Case
+       if (balance > 1 && id > node->left->id)
+       {
+           node->left =  leftRotate(node->left);
+           return rightRotate(node);
+       }
+
+       // Right Left Case
+       if (balance < -1 && id < node->right->id)
+       {
+           node->right = rightRotate(node->right);
+           return leftRotate(node);
+       }
+
+
+    return node;
+}
+
+idPinjam *newFileNode(int id, idPinjam newPeminjam) {
+       idPinjam *temp = ( idPinjam *)malloc(sizeof( idPinjam));
+       temp->id = id;
+       strcpy(temp->judul, newPeminjam.judul);
+       strcpy(temp->status, newPeminjam.status);
+       strcpy(temp->kontak, newPeminjam.kontak);
+       strcpy(temp->peminjam, newPeminjam.peminjam);
+       strcpy(temp->tanggal, newPeminjam.tanggal);
+       strcpy(temp->deadline, newPeminjam.deadline);
+       temp->height = 0;
+       temp->left = temp->right = NULL;
+       return temp;
+       
+}
+
 idPinjam *newNode(int id, request *item) {
        idPinjam *temp = ( idPinjam *)malloc(sizeof( idPinjam));
        temp->id = id;
@@ -294,17 +382,95 @@ idPinjam *newNode(int id, request *item) {
        tm.tm_mday += 14;
        strftime(temp->deadline, sizeof(temp->deadline), "%d-%m-%Y", &tm);
        printf("Deadline: %s\n", temp->deadline);
+       temp->height = 0;
 
        temp->left = temp->right = NULL;
        return temp;
 }
 
+int height(idPinjam *N)
+{
+    if (N == NULL)
+        return 0;
+    return 1+max(height(N->left), height(N->right));
+}
+
+int max(int a, int b)
+{
+    return (a > b)? a : b;
+}
+
+int getBalance(idPinjam *N)
+{
+    if (N == NULL)
+        return 0;
+    return height(N->left) - height(N->right);
+}
+
+idPinjam* rightRotate(idPinjam *y)
+{
+    idPinjam *x = y->left;
+    idPinjam *T2 = x->right;
+
+    x->right = y;
+    y->left = T2;
+
+    y->height = height(y);
+    x->height = height(x);
+
+    return x;
+}
+
+idPinjam* leftRotate(idPinjam *x)
+{
+    idPinjam *y = x->right;
+    idPinjam *T2 = y->left;
+
+    y->left = x;
+    x->right = T2;
+
+    x->height = height(x);
+    y->height = height(y);
+
+    return y;
+}
+
 idPinjam *insert( idPinjam *node, int id, request* curr) {
-    if (node == NULL) return newNode(id, curr);
-    if (id < node->id)
-        node->left = insert(node->left, id, curr);
-    else if (id > node->id)
-        node->right = insert(node->right,  id, curr);
+       if (node == NULL) return newNode(id, curr);
+       if (id < node->id)
+              node->left = insert(node->left, id, curr);
+       else if (id > node->id)
+              node->right = insert(node->right,  id, curr);
+       else
+              return node;
+
+       node->height = height(node);
+
+       int balance = getBalance(node);
+
+       // Left Left Case
+       if (balance > 1 && id < node->left->id)
+           return rightRotate(node);
+
+       // Right Right Case
+       if (balance < -1 && id > node->right->id)
+           return leftRotate(node);
+
+       // Left Right Case
+       if (balance > 1 && id > node->left->id)
+       {
+           node->left =  leftRotate(node->left);
+           return rightRotate(node);
+       }
+
+       // Right Left Case
+       if (balance < -1 && id < node->right->id)
+       {
+           node->right = rightRotate(node->right);
+           return leftRotate(node);
+       }
+
+
     return node;
 }
 void pinjam(request **head , request **tail){
@@ -335,7 +501,7 @@ void dequeue(request **head){
 void approve(request **head, idPinjam **root, int idCount){
        int choice;
        while (*head != NULL) {
-              choice = NULL;
+              choice = 0;
               printf("%s\n", (*head)->peminjam);
               printf("%s\n", (*head)->kontak);
               printf("%s\n", (*head)->judul);
@@ -350,7 +516,9 @@ void approve(request **head, idPinjam **root, int idCount){
                      switch (choice) {
                             case 1:
                                    idCount++;
-                                   insert(*root, idCount, *head);
+
+                                   (*root) = insert((*root), idCount, (*head));
+                                   
                                    printf("Request Approved\n");
                                    dequeue(head);
                                    break;
@@ -395,75 +563,94 @@ int menu () {
        return menu;
 }
 
-void search(){
-	printf("=============================\n");
-	printf("           Search \n");
-	printf("=============================\n");
+// void search(){
+// 	printf("=============================\n");
+// 	printf("           Search \n");
+// 	printf("=============================\n");
 	
-	int found = 0;
-	char scr[100];
-	printf("Input idword : ");
-   	scanf("%99s", scr);
-   	printf("=============================\n");
+// 	int found = 0;
+// 	char scr[100];
+// 	printf("Input idword : ");
+//    	scanf("%99s", scr);
+//    	printf("=============================\n");
    	
-	FILE *fp = fopen("dataBuku.txt", "r");
-      if(fp == NULL) {
-          perror("Unable to open file!");
-          exit(1);
-      }
+// 	FILE *fp = fopen("dataBuku.txt", "r");
+//       if(fp == NULL) {
+//           perror("Unable to open file!");
+//           exit(1);
+//       }
  
-     char chunk[128];
-     char *token;
-     unsigned count = 0;
+//      char chunk[128];
+//      char *token;
+//      unsigned count = 0;
  
-     while(fgets(chunk, sizeof(chunk), fp) != NULL) {
-     	if(strstr(chunk, scr) != NULL) {
-     		token = strtok(chunk,"#");
-         	//fputs(chunk, stdout);
-         	while(token != NULL)
-        	{
-				if(count==0){ printf("ID             : %s \n",token); }
-				if(count==1){ printf("Nama           : %s \n",token); }
-				if(count==2){ printf("Penerbit       : %s \n",token);	}
-				if(count==3){ printf("Tanggal Terbit : %s \n",token);	}
-				if(count==4){ printf("Author         : %s \n",token);	}
+//      while(fgets(chunk, sizeof(chunk), fp) != NULL) {
+//      	if(strstr(chunk, scr) != NULL) {
+//      		token = strtok(chunk,"#");
+//          	//fputs(chunk, stdout);
+//          	while(token != NULL)
+//         	{
+// 				if(count==0){ printf("ID             : %s \n",token); }
+// 				if(count==1){ printf("Nama           : %s \n",token); }
+// 				if(count==2){ printf("Penerbit       : %s \n",token);	}
+// 				if(count==3){ printf("Tanggal Terbit : %s \n",token);	}
+// 				if(count==4){ printf("Author         : %s \n",token);	}
 								
-                token = strtok(NULL,"#");
-                count++;
-        	}
-        	printf("\n");
-    	}
+//                 token = strtok(NULL,"#");
+//                 count++;
+//         	}
+//         	printf("\n");
+//     	}
     	
-    	count = 0;
-     }
+//     	count = 0;
+//      }
  
-     fclose(fp);
+//      fclose(fp);
      
-     printf("\n");
-}
+//      printf("\n");
+// }
 
-int main(int argc, char *argv[])
+void printInorder(idPinjam* node)
+{
+    if (node == NULL)
+        return;
+ 
+    /* first recur on left child */
+    printInorder(node->left);
+ 
+    /* then print the data of node */
+    printf("%d ", node->id);
+    printf("%s ", node->peminjam);
+ 
+    /* now recur on right child */
+    printInorder(node->right);
+}
+ 
+
+int main()
 {
        idPinjam *root = NULL;
        int idCount = 0;
        request *head = NULL, *tail = NULL;
-
+       readFileDataPeminjam(&root);
+       printInorder(root);
+       getch();
+       
 
        while (1) {
               switch (menu()) {
               case 1:
-              		readFile(&headBook);
-                            sortId(&headBook);
-
+              		readFileDataBuku(&headBook);
                      break;
               case 2:
-              		search();
+              		// search();
                      break;
               case 3:
                      pinjam(&head, &tail);
                      break;
               case 4:
                      approve(&head, &root, idCount);
+                     
                      break;
               case 5:
                      break;
