@@ -347,6 +347,8 @@ idPinjam *insertFile( idPinjam *node, idPinjam newPeminjam, int id) {
     return node;
 }
 
+
+
 idPinjam *newFileNode(int id, idPinjam newPeminjam) {
        idPinjam *temp = ( idPinjam *)malloc(sizeof( idPinjam));
        temp->id = id;
@@ -509,7 +511,7 @@ void pinjam(request **head , request **tail){
                 }
                 else {
                     printf("Buku sedang dipinjam\n");
-                    getch();
+                    
                     free(newQueue);
                     goto end;
                 }
@@ -536,6 +538,7 @@ void pinjam(request **head , request **tail){
             printf("Request dibatalkan!\n");
         }
         end:
+        getch();
 }
 
 void dequeue(request **head){
