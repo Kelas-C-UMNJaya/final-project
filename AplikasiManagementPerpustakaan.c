@@ -476,6 +476,10 @@ idPinjam *insert( idPinjam *node, int id, request* curr) {
 }
 void pinjam(request **head , request **tail){
        request *newQueue = (request *)malloc(sizeof(request));
+       system("cls");
+       printf("------------------------------------------\n");
+       printf("               Make Request               \n");
+       printf("------------------------------------------\n");
        printf("Masukkan nama peminjam: ");
        scanf("%s", newQueue->peminjam);
        printf("Masukkan kontak peminjam: ");
@@ -503,13 +507,17 @@ void approve(request **head, idPinjam **root, int idCount){
        int choice;
        while (*head != NULL) {
               choice = 0;
-              printf("%s\n", (*head)->peminjam);
-              printf("%s\n", (*head)->kontak);
-              printf("%s\n", (*head)->judul);
+              system("cls");
+              printf("-------------------------------------\n");
+              printf("             Process Request         \n");
+              printf("-------------------------------------\n");
+              printf("Nama   : %s\n", (*head)->peminjam);
+              printf("Kontak : %s\n", (*head)->kontak);
+              printf("Buku   : %s\n", (*head)->judul);
 
 
               while (choice != 1 && choice != 2) {
-                     printf("Status:\n"
+                     printf("\nStatus:\n"
                      "1. Approve\n"
                      "2. Reject\n");
 
@@ -550,13 +558,14 @@ void approve(request **head, idPinjam **root, int idCount){
 // }
 int menu () {
        int menu;
+       system("cls");
        printf("=============================\n"
               " Library Inventory Manager\n"
               "=============================\n"
               "1. Sorting Buku\n"
               "2. Search buku\n"
               "3. Request peminjaman buku\n"
-              "4. Approve peminjaman buku\n"
+              "4. Process request\n"
               "5. Kembalikan buku\n"
               "6. Exit\n");
        printf("Pilih menu: ");
@@ -635,14 +644,13 @@ int main()
        request *head = NULL, *tail = NULL;
        readFileDataPeminjam(&root);
        readFileDataBuku(&headBook);
-       printInorder(root);
-       getch();
+       
        
 
        while (1) {
               switch (menu()) {
               case 1:
-              		readFileDataBuku(&headBook);
+              		 sorting();
                      break;
               case 2:
               		// search();
