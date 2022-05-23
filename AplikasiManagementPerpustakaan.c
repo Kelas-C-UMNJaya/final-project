@@ -24,6 +24,11 @@ typedef struct idPinjam {
        struct idPinjam *left, *right;
 } idPinjam;
 
+// struct node{
+//     struct idPinjam user;
+//     struct node *next;
+// };
+// struct node *data;
 
 typedef struct bookData {
 	char judul[50];
@@ -521,7 +526,18 @@ idPinjam *delete( idPinjam *node, int id) {
        return node;
 }
 
-
+// void insert_node(struct idPinjam user){
+//     struct node *temp = (struct node *)malloc(sizeof(struct node));
+//     temp->user = user;
+//     if(data == NULL){
+//         data = temp;
+//         data->next = NULL;
+//     }
+//     else{
+//         temp->next = data;
+//         data = temp;
+//     }
+// }
 
 void pinjam(request **head , request **tail){
        request *newQueue = (request *)malloc(sizeof(request));
@@ -552,9 +568,20 @@ void dequeue(request **head){
        free(temp);
 }
 
+// void save_node(){
+//     struct node *temp = data;
+//     FILE *fp = fopen("dataPeminjam.txt", "w");
+//     while(temp != NULL){
+//         fprintf(fp, "%s#%s#%s#%d\n", temp->user.judul, temp->user.kontak, temp->user.peminjam, temp->user.id);
+//         temp = temp->next;
+//     }
+//     fclose(fp);
+// }
+
 void approve(request **head, idPinjam **root, int idCount){
        int choice;
-    //    FILE *data = fopen("dataPeminjam.txt", "w");
+       FILE *f = fopen("dataPeminjam.txt", "r");
+       char line[255];
        while (*head != NULL) {
               choice = 0;
               system("cls");
@@ -574,11 +601,15 @@ void approve(request **head, idPinjam **root, int idCount){
                      scanf("%d", &choice);
                      switch (choice) {
                             case 1:
-                                   idCount++;
-
-                                   
-                                    
+                                    idCount++;
                                     (*root) = insert((*root), idCount, (*head));
+                                    // while(fgets(line, sizeof(line), f)){
+                                    //     struct idPinjam user;
+                                    //     sscanf(line, "%s#%s#%s#%d", (*head)->judul, (*head)->kontak, (*head)->peminjam, &user.id);
+                                        // insert_node(user);
+                                    //     save_node();
+                                    // }
+                                    
                                 //    fprintf(data, "%s#%s#%s#%d\n", (*head)->judul, (*head)->kontak, (*head)->peminjam, idCount);
                                    printf("Request Approved\n");
                                    dequeue(head);
@@ -596,21 +627,18 @@ void approve(request **head, idPinjam **root, int idCount){
 }
 
 void kembalikanBuku(idPinjam **root){
-        int id;
-            system("cls");
-            printf("-------------------------------------\n");
-            printf("             Return Book             \n");
-            printf("-------------------------------------\n");
-            printf("Masukkan ID buku yang ingin dikembalikan: ");
-            scanf("%d", &id);
-            delete((*root), id);
-            printf("buku sudah dikembalikan\n");
-            printf("\n"
-            "Press any key to continue...");
-            getch();
-            
-                    
-        
+    int id;
+    system("cls");
+    printf("-------------------------------------\n");
+    printf("             Return Book             \n");
+    printf("-------------------------------------\n");
+    printf("Masukkan ID buku yang ingin dikembalikan: ");
+    scanf("%d", &id);
+    delete((*root), id);
+    printf("buku sudah dikembalikan\n");
+    printf("\n"
+    "Press any key to continue...");
+    getch(); 
 }    
 
 // void print(request *req) {
@@ -702,16 +730,6 @@ void printInorder(idPinjam* node)
     printInorder(node->right);
 }
 
-// void saveChange(idPinjam *root){
-//     FILE *fp = fopen("dataBuku.txt", "w");
-//     if(fp == NULL) {
-//         perror("Unable to open file!");
-//         exit(1);
-//     }
-//     printInorder(root);
-//     fclose(fp);
-// }
-
 int main()
 {
        idPinjam *root = NULL;
@@ -719,8 +737,6 @@ int main()
        request *head = NULL, *tail = NULL;
        readFileDataPeminjam(&root);
        readFileDataBuku(&headBook);
-       
-       
 
        while (1) {
               switch (menu()) {
@@ -741,6 +757,7 @@ int main()
                      kembalikanBuku(&root);
                      break;
               case 6:
+                    
                     //  saveChange(root);
                      return 0;
               default:
