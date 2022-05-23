@@ -5,9 +5,9 @@
 #include <stdbool.h>
 
 typedef struct request {
-       char peminjam[20];
+       char peminjam[50];
        char kontak[20];
-       char judul[20];
+       char judul[50];
        char status[20];
        struct request *next;
 } request;
@@ -17,7 +17,7 @@ typedef struct idPinjam {
        char judul[50];
        char status[20];
        char kontak[20];
-       char peminjam[20];
+       char peminjam[50];
        char tanggal[20];
        char deadline[20];
        int height;
@@ -297,18 +297,11 @@ void readFileDataPeminjam(struct idPinjam **dbPeminjam)
 	while (!(feof(data)))
 	{
               idPinjam newPeminjam;
-    	       //idPinjam *newPeminjam = ( idPinjam *)malloc(sizeof( idPinjam));
-              // fscanf(data, "%d[^#]\n", &newPeminjam.id);
-              
               fscanf(data, "%[^#]#%[^#]#%[^#]#%[^#]#%[^#]#%[^#]#%d[^\n\r]\n",   newPeminjam.judul,
               newPeminjam.status, newPeminjam.kontak, newPeminjam.peminjam, newPeminjam.tanggal, newPeminjam.deadline, &newPeminjam.id);
-		// fscanf(data, "%d[^#]#%[^#]#%[^#]#%[^#]#%[^#]#%[^#]#%[^\n\r]\n",  &newPeminjam->id, newPeminjam->judul,
-              // newPeminjam->status, newPeminjam->kontak, newPeminjam->peminjam, newPeminjam->tanggal, newPeminjam->deadline);
-              // newPeminjam->height = 0;
-              // newPeminjam->left = newPeminjam->right = NULL;
+		
               (*dbPeminjam) = insertFile((*dbPeminjam), newPeminjam, newPeminjam.id);
-              // printf("| %-25s | %-20s | %-15s | %-20s | %-15s | %-20s | %-20s |\n", newPeminjam->judul, newPeminjam->id,
-              // newPeminjam->status, newPeminjam->kontak, newPeminjam->peminjam, newPeminjam->tanggal, newPeminjam->deadline);
+            
               idCount++;
 	}
 	fclose(data);
@@ -474,33 +467,96 @@ idPinjam *insert( idPinjam *node, int id, request* curr) {
 
     return node;
 }
+
+
+
 void pinjam(request **head , request **tail){
        request *newQueue = (request *)malloc(sizeof(request));
+       char confirm;
+       int found = 0;
        system("cls");
        printf("------------------------------------------\n");
        printf("               Make Request               \n");
        printf("------------------------------------------\n");
+       fflush(stdin);
        printf("Masukkan nama peminjam: ");
-       scanf("%s", newQueue->peminjam);
+       scanf("%[^\n]", newQueue->peminjam);
+       fflush(stdin);
        printf("Masukkan kontak peminjam: ");
-       scanf("%s", newQueue->kontak);
-       printf("Masukkan judul buku: ");
-       scanf("%s", newQueue->judul);
+       scanf("%[^\n]", newQueue->kontak);
+       fflush(stdin);
+
+       do{
+           
+           found = 0;
+           
+            printf("Masukkan judul buku: ");
+            scanf("%[^\n]", newQueue->judul);
+            fflush(stdin);
+            allBook *curr = headBook;
+
+            while (curr != NULL) {
+                if (strcmp(curr->buku.judul, newQueue->judul) == 0) {
+                    printf("| %s | %-30s | %-10s | %-10s | %-10s | %-15s |\n",  curr->buku.id, curr->buku.judul, curr->buku.penerbit, curr->buku.author, curr->buku.tanggal, curr->buku.status);
+                    found = 1;
+                    break;
+                }
+                curr = curr->next;
+            }
+            if(found == 1){
+                if (strcmp(curr->buku.status, "Belum Dipinjam") == 0) {
+                    break;
+                }
+                else {
+                    printf("Buku sedang dipinjam\n");
+                    getch();
+                    free(newQueue);
+                    goto end;
+                }
+            }
+            else {
+                printf("Buku tidak ditemukan\n\n");
+                getch();
+            }
+        } while (1);
+        
+       printf("confirm? (y/n)"); scanf ("%c", &confirm);
+       fflush(stdin);
        strcpy(newQueue->status, "pending");
-       newQueue->next = NULL;
-       if (*head == NULL) {
-              *head = newQueue;
-              *tail = newQueue;
-       } else {
-              (*tail)->next = newQueue;
-              *tail = newQueue;
-       }
+        if (confirm == 'y') {
+            if (*head == NULL) {
+                *head = newQueue;
+                *tail = newQueue;
+            } else {
+                (*tail)->next = newQueue;
+                *tail = newQueue;
+            }
+            printf("Request berhasil dibuat!\n");
+        } else {
+            printf("Request dibatalkan!\n");
+        }
+        end:
 }
 
 void dequeue(request **head){
        request *temp = *head;
        *head = (*head)->next;
        free(temp);
+}
+
+
+
+
+
+void ubahStatusBukuDipinjam ( request *head) {
+    curr = headBook;
+    while (curr != NULL) {
+        if (strcmp(curr->buku.judul, head->judul) == 0) {
+            strcpy(curr->buku.status, "Dipinjam");
+            return;
+        }
+        curr = curr->next;
+    }
 }
 
 void approve(request **head, idPinjam **root, int idCount){
@@ -522,12 +578,14 @@ void approve(request **head, idPinjam **root, int idCount){
                      "2. Reject\n");
 
                      scanf("%d", &choice);
+                     fflush(stdin);
                      switch (choice) {
                             case 1:
-                                   idCount++;
-
-                                   (*root) = insert((*root), idCount, (*head));
                                    
+    
+                                    (*root) = insert((*root), idCount, (*head));
+                                    ubahStatusBukuDipinjam(*head);
+                                    idCount++;
                                    printf("Request Approved\n");
                                    dequeue(head);
                                    break;
@@ -543,19 +601,11 @@ void approve(request **head, idPinjam **root, int idCount){
 
 
        }
+       printf("Request sudah habis\n");
+       getch();
 }
 
 
-
-// void print(request *req) {
-//        printf("\nNama peminjam: %s", req->peminjam);
-//        printf("\nKontak peminjam: %s", req->kontak);
-//        printf("\nJudul buku: %s", req->judul);
-//        printf("\nTanggal pinjam: %s", req->tanggal);
-//        printf("\nDeadline pinjam: %s", req->deadline);
-//        printf("\nStatus pinjam: %s", req->status);
-//        printf("\nID pinjam: %s", req->id);
-// }
 int menu () {
        int menu;
        system("cls");
@@ -669,7 +719,7 @@ int main()
                      break;
               case 4:
                      approve(&head, &root, idCount);
-                     
+                     getch();
                      break;
               case 5:
                      break;
@@ -681,34 +731,5 @@ int main()
               }
        }
 
-       // printf("=============================\n"
-       //      "           Search\n"
-       //     "=============================\n"
-       //     " Input idword: Algoritma\n\n"
-       //     "=============================\n"
-       //     "Nama : Algoritma dan data struktur\n"
-       //     "ID   : B001\n"
-       //     "Penerbit : Gajah Mada\n"
-       //     "Tanggal terbit : 01/01/2020\n"
-       //     "Author : Raja\n"
-       //     "=============================\n"
-       //     "Nama : Algoritma bagi pemula\n"
-       //     "ID   : B002\n"
-       //     "Penerbit : Gajah Mada\n"
-       //     "Tanggal terbit : 01/01/2020\n"
-       //     "Author : Dana\n");
-
-       // printf("=============================\n"
-       //         "    Peminjaman buku\n"
-       //     "=============================\n"
-       //     " Nama lengkap buku: Algoritma dan data struktur\n\n"
-       //     "=============================\n"
-       //     "Nama : Algoritma dan data struktur\n"
-       //     "ID   : B001\n"
-       //     "Penerbit : Gajah Mada\n"
-       //     "Tanggal terbit : 01/01/2020\n"
-       //     "Author : Raja\n"
-       //        "=============================\n"
-       //        "Request peminjaman akan dibuat\n");
     return 0;
 }
