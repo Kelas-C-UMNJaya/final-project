@@ -554,6 +554,7 @@ void dequeue(request **head){
 
 void approve(request **head, idPinjam **root, int idCount){
        int choice;
+    //    FILE *data = fopen("dataPeminjam.txt", "w");
        while (*head != NULL) {
               choice = 0;
               system("cls");
@@ -578,7 +579,7 @@ void approve(request **head, idPinjam **root, int idCount){
                                    
                                     
                                     (*root) = insert((*root), idCount, (*head));
-                                   
+                                //    fprintf(data, "%s#%s#%s#%d\n", (*head)->judul, (*head)->kontak, (*head)->peminjam, idCount);
                                    printf("Request Approved\n");
                                    dequeue(head);
                                    break;
