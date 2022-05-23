@@ -635,7 +635,16 @@ void printInorder(idPinjam* node)
     /* now recur on right child */
     printInorder(node->right);
 }
- 
+
+void saveChange(idPinjam *root){
+    FILE *fp = fopen("dataBuku.txt", "w");
+    if(fp == NULL) {
+        perror("Unable to open file!");
+        exit(1);
+    }
+    printInorder(root);
+    fclose(fp);
+}
 
 int main()
 {
@@ -665,6 +674,7 @@ int main()
               case 5:
                      break;
               case 6:
+                     saveChange(root);
                      return 0;
               default:
                      printf("Pilihan tidak tersedia\n");
