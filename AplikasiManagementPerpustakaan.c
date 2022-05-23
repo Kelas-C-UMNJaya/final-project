@@ -475,34 +475,53 @@ idPinjam *insert( idPinjam *node, int id, request* curr) {
     return node;
 }
 
-idPinjam *delete( idPinjam *node, int id, request* curr) {
+void ubahStatusBukudDikembalikan (idPinjam *node) {
+    curr = headBook;
+    while (curr != NULL) {
+        if (strcmp(curr->buku.judul, node->judul) == 0) {
+            strcpy (curr->buku.status, "Belum Dipinjam");
+            return;
+        }
+        curr = curr->next;
+    }
+}
+
+
+
+idPinjam *delete( idPinjam *node, int id) {
     if (node == NULL) return NULL;
        if (id < node->id)
-              node->left = delete(node->left, id, curr);
+              node->left = delete(node->left, id);
        else if (id > node->id)
-              node->right = delete(node->right, id, curr);
+              node->right = delete(node->right, id);
        else {
               if (node->left == NULL && node->right == NULL) {
+              ubahStatusBukudDikembalikan(node);
               free(node);
               node = NULL;
               } else if (node->left == NULL) {
+              ubahStatusBukudDikembalikan(node);
               idPinjam *temp = node;
               node = node->right;
               free(temp);
               } else if (node->right == NULL) {
+              ubahStatusBukudDikembalikan(node);
               idPinjam *temp = node;
               node = node->left;
               free(temp);
               } else {
+              ubahStatusBukudDikembalikan(node);
               idPinjam *temp = node->right;
               while (temp->left != NULL)
                      temp = temp->left;
               node->id = temp->id;
-              node->right = delete(node->right, temp->id, curr);
+              node->right = delete(node->right, temp->id);
               }
        }
        return node;
 }
+
+
 
 void pinjam(request **head , request **tail){
        request *newQueue = (request *)malloc(sizeof(request));
@@ -556,7 +575,9 @@ void approve(request **head, idPinjam **root, int idCount){
                             case 1:
                                    idCount++;
 
-                                   (*root) = insert((*root), idCount, (*head));
+                                   
+                                    
+                                    (*root) = insert((*root), idCount, (*head));
                                    
                                    printf("Request Approved\n");
                                    dequeue(head);
@@ -570,12 +591,26 @@ void approve(request **head, idPinjam **root, int idCount){
                                    break;
                      }
               }
-
-
        }
 }
 
-
+void kembalikanBuku(idPinjam **root){
+        int id;
+            system("cls");
+            printf("-------------------------------------\n");
+            printf("             Return Book             \n");
+            printf("-------------------------------------\n");
+            printf("Masukkan ID buku yang ingin dikembalikan: ");
+            scanf("%d", &id);
+            delete((*root), id);
+            printf("buku sudah dikembalikan\n");
+            printf("\n"
+            "Press any key to continue...");
+            getch();
+            
+                    
+        
+}    
 
 // void print(request *req) {
 //        printf("\nNama peminjam: %s", req->peminjam);
@@ -702,6 +737,7 @@ int main()
                      
                      break;
               case 5:
+                     kembalikanBuku(&root);
                      break;
               case 6:
                     //  saveChange(root);
