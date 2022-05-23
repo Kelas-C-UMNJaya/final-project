@@ -1,1 +1,1 @@
-goto end;
+search();

@@ -229,21 +229,21 @@ void printSort()
 {
 	curr = headBook;
 	printf("\n");
-	printf("======================================================================================================================\n");
-	printf("|                                                     DATA BUKU                                                      |\n");
-	printf("======================================================================================================================\n");
+	printf("================================================================================================================================\n");
+	printf("|                                                          DATA BUKU                                                           |\n");
+	printf("================================================================================================================================\n");
 	
 	while(curr != NULL)
 	{
 		struct bookData hasil = curr->buku;
 		
-		printf("| %s | %-40s | %-10s | %-10s | %-20s | %-15s |\n", hasil.id, hasil.judul,
+		printf("| %s | %-40s | %-20s | %-10s | %-20s | %-15s |\n", hasil.id, hasil.judul,
            hasil.penerbit, hasil.tanggal, hasil.author, hasil.status);
         
         curr = curr->next;
 	}
 	
-	printf("----------------------------------------------------------------------------------------------------------------------\n");
+	printf("--------------------------------------------------------------------------------------------------------------------------------\n");
 	printf("\n");
 	getch();
 }
@@ -699,146 +699,146 @@ int menu () {
 //ada yang eror leo :))))))
 //ada yang eror leo :))))))
 //ada yang eror leo :))))))
-void search(){
-    system("cls");
-    int menu;
-    char search[100];
- 	int counter = 0;
-       printf("=============================\n"
-              " \tsearch\n"
-              "=============================\n"
-              "1. ID\n"
-              "2. judul\n"
-              "3. penerbit\n"
-              "4. author\n"
-              "5. tanggal terbit\n"
-              "6. Exit\n");
-       printf("Pilih menu: ");
-       scanf("%d", &menu);
-       switch (menu) {
-           case 1:
-                   printf("Masukkan ID buku: ");
-                   scanf("%[^\n]", search);
-                   curr = headBook;
-                    while (curr != NULL) {
-                        if (strcmp(curr->buku.id, search) == 0) {
-                            printf("\n=============================\n"
-                                   " ID : %s\n"
-                                   " Judul: %s\n"
-                                   " Penerbit: %s\n"
-                                   " Author: %s\n"
-                                   " Tanggal terbit: %s\n"
-                                   " Status: %s\n", curr->buku.id, curr->buku.judul, curr->buku.penerbit, curr->buku.author, curr->buku.tanggal, curr->buku.status,);
-                            getch();
-                            return;
-                        }
-                        curr = curr->next;
-                    }
-                    printf("ID buku tidak ditemukan");
-                   break;
-            case 2:
-                   printf("Masukkan judul buku: ");
-                   scanf("%[^\n]", search);
-                   curr = headBook;
-                    while (curr != NULL) {
-                        if (strcmp(curr->buku.judul, search) == 0) {
-                            printf("\n=============================\n"
-                                   " ID : %s\n"
-                                   " Judul: %s\n"
-                                   " Penerbit: %s\n"
-                                   " Author: %s\n"
-                                   " Tanggal terbit: %s\n"
-                                   " Status: %s\n", curr->buku.id, curr->buku.judul, curr->buku.penerbit, curr->buku.author, curr->buku.tanggal, curr->buku.status);
-                            getch();
-                            return;
-                        }
-                        curr = curr->next;
-                    }
-                    printf("Judul buku tidak ditemukan");
-                   break;
-            case 3:
-                    counter = 0;
-                       printf("Masukkan penerbit buku: ");
-                       scanf("%[^\n]", search);
-                        curr = headBook;
-                         while (curr != NULL) {
-                              if (strcmp(curr->buku.penerbit, search) == 0) {
-                         printf("\n=============================\n"
-                                " ID : %s\n"
-                                " Judul: %s\n"
-                                " Penerbit: %s\n"
-                                " Author: %s\n"
-                                " Tanggal terbit: %s\n"
-                                " Status: %s\n", curr->buku.judul, curr->buku.penerbit, curr->buku.author, curr->buku.tanggal, curr->buku.status, curr->buku.id);
-                        printf("\n");
-                               counter++;
-                              }
-                              curr = curr->next;
-                         }
-                        if(counter = 0){
-                        printf("Penerbit tidak ditemukan");
-                        }
-                        getch();
-                       return;
-                       break;
+// void search(){
+//     system("cls");
+//     int menu;
+//     char search[100];
+//  	int counter = 0;
+//        printf("=============================\n"
+//               " \tsearch\n"
+//               "=============================\n"
+//               "1. ID\n"
+//               "2. judul\n"
+//               "3. penerbit\n"
+//               "4. author\n"
+//               "5. tanggal terbit\n"
+//               "6. Exit\n");
+//        printf("Pilih menu: ");
+//        scanf("%d", &menu);
+//        switch (menu) {
+//            case 1:
+//                    printf("Masukkan ID buku: ");
+//                    scanf("%[^\n]", search);
+//                    curr = headBook;
+//                     while (curr != NULL) {
+//                         if (strcmp(curr->buku.id, search) == 0) {
+//                             printf("\n=============================\n"
+//                                    " ID : %s\n"
+//                                    " Judul: %s\n"
+//                                    " Penerbit: %s\n"
+//                                    " Author: %s\n"
+//                                    " Tanggal terbit: %s\n"
+//                                    " Status: %s\n", curr->buku.id, curr->buku.judul, curr->buku.penerbit, curr->buku.author, curr->buku.tanggal, curr->buku.status,);
+//                             getch();
+//                             return;
+//                         }
+//                         curr = curr->next;
+//                     }
+//                     printf("ID buku tidak ditemukan");
+//                    break;
+//             case 2:
+//                    printf("Masukkan judul buku: ");
+//                    scanf("%[^\n]", search);
+//                    curr = headBook;
+//                     while (curr != NULL) {
+//                         if (strcmp(curr->buku.judul, search) == 0) {
+//                             printf("\n=============================\n"
+//                                    " ID : %s\n"
+//                                    " Judul: %s\n"
+//                                    " Penerbit: %s\n"
+//                                    " Author: %s\n"
+//                                    " Tanggal terbit: %s\n"
+//                                    " Status: %s\n", curr->buku.id, curr->buku.judul, curr->buku.penerbit, curr->buku.author, curr->buku.tanggal, curr->buku.status);
+//                             getch();
+//                             return;
+//                         }
+//                         curr = curr->next;
+//                     }
+//                     printf("Judul buku tidak ditemukan");
+//                    break;
+//             case 3:
+//                     counter = 0;
+//                        printf("Masukkan penerbit buku: ");
+//                        scanf("%[^\n]", search);
+//                         curr = headBook;
+//                          while (curr != NULL) {
+//                               if (strcmp(curr->buku.penerbit, search) == 0) {
+//                          printf("\n=============================\n"
+//                                 " ID : %s\n"
+//                                 " Judul: %s\n"
+//                                 " Penerbit: %s\n"
+//                                 " Author: %s\n"
+//                                 " Tanggal terbit: %s\n"
+//                                 " Status: %s\n", curr->buku.judul, curr->buku.penerbit, curr->buku.author, curr->buku.tanggal, curr->buku.status, curr->buku.id);
+//                         printf("\n");
+//                                counter++;
+//                               }
+//                               curr = curr->next;
+//                          }
+//                         if(counter = 0){
+//                         printf("Penerbit tidak ditemukan");
+//                         }
+//                         getch();
+//                        return;
+//                        break;
 
-                   default:
-                       printf("Pilihan tidak ada\n");
-                       break;
-            case 4:
-                    counter = 0;
-                       printf("Masukkan author buku: ");
-                       scanf("%[^\n]", search);
-                        curr = headBook;
-                         while (curr != NULL) {
-                              if (strcmp(curr->buku.author, search) == 0) {
-                         printf("\n=============================\n"
-                                " ID : %s\n"
-                                " Judul: %s\n"
-                                " Penerbit: %s\n"
-                                " Author: %s\n"
-                                " Tanggal terbit: %s\n"
-                                " Status: %s\n", curr->buku.judul, curr->buku.penerbit, curr->buku.author, curr->buku.tanggal, curr->buku.status, curr->buku.id);
-                        printf("\n");
-                               counter++;
-                              }
-                              curr = curr->next;
-                         }
-                        if(counter = 0){
-                        printf("Author buku tidak ditemukan");
-                        }
-                        getch();
-                       return;
-                       break;
+//                    default:
+//                        printf("Pilihan tidak ada\n");
+//                        break;
+//             case 4:
+//                     counter = 0;
+//                        printf("Masukkan author buku: ");
+//                        scanf("%[^\n]", search);
+//                         curr = headBook;
+//                          while (curr != NULL) {
+//                               if (strcmp(curr->buku.author, search) == 0) {
+//                          printf("\n=============================\n"
+//                                 " ID : %s\n"
+//                                 " Judul: %s\n"
+//                                 " Penerbit: %s\n"
+//                                 " Author: %s\n"
+//                                 " Tanggal terbit: %s\n"
+//                                 " Status: %s\n", curr->buku.judul, curr->buku.penerbit, curr->buku.author, curr->buku.tanggal, curr->buku.status, curr->buku.id);
+//                         printf("\n");
+//                                counter++;
+//                               }
+//                               curr = curr->next;
+//                          }
+//                         if(counter = 0){
+//                         printf("Author buku tidak ditemukan");
+//                         }
+//                         getch();
+//                        return;
+//                        break;
 
-                   default:
-                       printf("Pilihan tidak ada\n");
-                       break;
-            case 5:
-                   printf("Masukkan Tanggal buku: ");
-                   scanf("%[^\n]", search);
-                   curr = headBook;
-                    while (curr != NULL) {
-                        if (strcmp(curr->buku.tanggal, search) == 0) {
-                            printf("\n=============================\n"
-                                   " ID : %s\n"
-                                   " Judul: %s\n"
-                                   " Penerbit: %s\n"
-                                   " Author: %s\n"
-                                   " Tanggal terbit: %s\n"
-                                   " Status: %s\n", curr->buku.id, curr->buku.judul, curr->buku.penerbit, curr->buku.author, curr->buku.tanggal, curr->buku.status,);
-                            getch();
-                            return;
-                        }
-                        curr = curr->next;
-                    }
-                    printf("Tanggal buku tidak ditemukan");
-                   break;
-            case 6:
+//                    default:
+//                        printf("Pilihan tidak ada\n");
+//                        break;
+//             case 5:
+//                    printf("Masukkan Tanggal buku: ");
+//                    scanf("%[^\n]", search);
+//                    curr = headBook;
+//                     while (curr != NULL) {
+//                         if (strcmp(curr->buku.tanggal, search) == 0) {
+//                             printf("\n=============================\n"
+//                                    " ID : %s\n"
+//                                    " Judul: %s\n"
+//                                    " Penerbit: %s\n"
+//                                    " Author: %s\n"
+//                                    " Tanggal terbit: %s\n"
+//                                    " Status: %s\n", curr->buku.id, curr->buku.judul, curr->buku.penerbit, curr->buku.author, curr->buku.tanggal, curr->buku.status,);
+//                             getch();
+//                             return;
+//                         }
+//                         curr = curr->next;
+//                     }
+//                     printf("Tanggal buku tidak ditemukan");
+//                    break;
+//             case 6:
 
-                return;
-       }
-
+//                 return;
+//        }
+// }
 
 void printInorder(idPinjam* node)
 {
@@ -902,7 +902,7 @@ int main()
               		 sorting();
                      break;
               case 2:
-              		search();
+              		// search();
                      break;
               case 3:
                      pinjam(&head, &tail);
