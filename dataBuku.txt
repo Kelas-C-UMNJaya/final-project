@@ -1,10 +1,10 @@
-B001#Algoritma dan Struktur Data#Gajah Mada#01/01/2020#Raja#Belum Dipinjam
-B002#Algoritma Bagi Pemula#Gajah Mada#01/01/2020#Dana#Belum Dipinjam
-B003#Javascript Programming#Gajah Mada#01/01/2020#Mulya#Belum Dipinjam
-B004#PHP Programming#UI#01/01/2020#Adi#Belum Dipinjam
-B005#C/C++ Programming#ITB#01/01/2020#Nugraha#Belum Dipinjam
-B006#Golang Google#ITB#01/01/2020#Felix#Belum Dipinjam
-B007#Becak#Singa#02/02/2020#Ratu#Belum Dipinjam
 B008#Kalkulus Thomas Edisi 13#Erlangga#08/05/2017#Thomas#Belum Dipinjam
 B009#Aljabar Linear dan Aplikasinya Edisi 5#Erlangga#08/05/2001#Steven J. Leon#Belum Dipinjam
-B010#Geometry#Erlangga#08/05/2012#Jessica Wolk-Stanley#Belum Dipinjam
+B007#Becak#Singa#02/02/2020#Ratu#Belum Dipinjam
+B001#Algoritma dan Struktur Data#Gajah Mada#01/01/2020#Raja#Belum Dipinjam
+B005#C/C++ Programming#ITB#01/01/2020#Nugraha#Belum Dipinjam
+B003#Javascript Programming#Gajah Mada#01/01/2020#Mulya#Belum Dipinjam
+B010#Geometry#Erlangga#08/05/2012#Jessica Wolk-Stanley#Dipinjam
+B006#Golang Google#ITB#01/01/2020#Felix#Belum Dipinjam
+B002#Algoritma Bagi Pemula#Gajah Mada#01/01/2020#Dana#Belum Dipinjam
+B004#PHP Programming#UI#01/01/2020#Adi#Belum Dipinjam

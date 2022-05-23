@@ -574,7 +574,7 @@ void pinjam(request **head , request **tail){
                     printf("Buku sedang dipinjam\n");
                     getch();
                     free(newQueue);
-                    goto end;
+                    // goto end;
                 }
             }
             else {
@@ -598,7 +598,7 @@ void pinjam(request **head , request **tail){
         } else {
             printf("Request dibatalkan!\n");
         }
-        end:
+        // end:
 }
 
 void dequeue(request **head){
@@ -607,22 +607,6 @@ void dequeue(request **head){
        free(temp);
 }
 
-<<<<<<< HEAD
-// void save_node(){
-//     struct node *temp = data;
-//     FILE *fp = fopen("dataPeminjam.txt", "w");
-//     while(temp != NULL){
-//         fprintf(fp, "%s#%s#%s#%d\n", temp->user.judul, temp->user.kontak, temp->user.peminjam, temp->user.id);
-//         temp = temp->next;
-//     }
-//     fclose(fp);
-// }
-
-void approve(request **head, idPinjam **root, int idCount){
-       int choice;
-       FILE *f = fopen("dataPeminjam.txt", "r");
-       char line[255];
-=======
 void ubahStatusBukuDipinjam ( request *head) {
     curr = headBook;
     while (curr != NULL) {
@@ -636,7 +620,6 @@ void ubahStatusBukuDipinjam ( request *head) {
 
 void approve(request **head, idPinjam **root, int idCount){
        int choice;
->>>>>>> parent of 341f563 (Merge branch 'main' of https://github.com/Kelas-C-UMNJaya/final-project)
        while (*head != NULL) {
               choice = 0;
               system("cls");
@@ -657,22 +640,9 @@ void approve(request **head, idPinjam **root, int idCount){
                      fflush(stdin);
                      switch (choice) {
                             case 1:
-<<<<<<< HEAD
-                                    idCount++;
-                                    (*root) = insert((*root), idCount, (*head));
-                                    // while(fgets(line, sizeof(line), f)){
-                                    //     struct idPinjam user;
-                                    //     sscanf(line, "%s#%s#%s#%d", (*head)->judul, (*head)->kontak, (*head)->peminjam, &user.id);
-                                        // insert_node(user);
-                                    //     save_node();
-                                    // }
-                                    
-                                //    fprintf(data, "%s#%s#%s#%d\n", (*head)->judul, (*head)->kontak, (*head)->peminjam, idCount);
-=======
                                     (*root) = insert((*root), idCount, (*head));
                                     ubahStatusBukuDipinjam(*head);
-                                    idCount++; idCount++;
->>>>>>> parent of 341f563 (Merge branch 'main' of https://github.com/Kelas-C-UMNJaya/final-project)
+                                    idCount++;
                                    printf("Request Approved\n");
                                    dequeue(head);
                                    break;
@@ -685,9 +655,10 @@ void approve(request **head, idPinjam **root, int idCount){
                                    break;
                      }
               }
-              printf("Request sudah habis\n");
               getch();
        }
+    printf("Request sudah habis\n");
+    getch();
 }
 
 void kembalikanBuku(idPinjam **root){
@@ -740,6 +711,38 @@ void printInorder(idPinjam* node)
     printInorder(node->right);
 }
 
+void export(idPinjam *root)
+{
+    FILE *fp = fopen("dataPeminjam.txt", "w");
+    export_recursive(fp, root);
+    fclose(fp);
+}
+
+void export_recursive(FILE *fp, idPinjam *node)
+{
+    if(node!=NULL)
+    {
+        export_recursive(fp, node->left);
+        fprintf(fp, "%s#%s#%s#%s#%s#%s#%d\n", node->judul, node->status, node->kontak, node->peminjam, node->tanggal, node->deadline, node->id);
+        export_recursive(fp, node->right);
+    }
+}
+
+void save_node(){
+    if(headBook == NULL){
+        printf("List is empty\n");
+    }
+    else{
+        curr = headBook;
+        FILE *fp = fopen("dataBuku.txt", "w");
+        while(curr != NULL){
+            fprintf(fp, "%s#%s#%s#%s#%s#%s\n", curr->buku.id, curr->buku.judul, curr->buku.penerbit, curr->buku.tanggal, curr->buku.author, curr->buku.status);
+            curr = curr->next;
+        }
+        fclose(fp);
+    }
+}
+
 int main()
 {
        idPinjam *root = NULL;
@@ -767,9 +770,9 @@ int main()
                      kembalikanBuku(&root);
                      break;
               case 6:
-                    
-                    //  saveChange(root);
-                     return 0;
+                    export(root);
+                    save_node();
+                    return 0;
               default:
                      printf("Pilihan tidak tersedia\n");
               }
