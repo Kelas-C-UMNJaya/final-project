@@ -474,6 +474,36 @@ idPinjam *insert( idPinjam *node, int id, request* curr) {
 
     return node;
 }
+
+idPinjam *delete( idPinjam *node, int id, request* curr) {
+    if (node == NULL) return NULL;
+       if (id < node->id)
+              node->left = delete(node->left, id, curr);
+       else if (id > node->id)
+              node->right = delete(node->right, id, curr);
+       else {
+              if (node->left == NULL && node->right == NULL) {
+              free(node);
+              node = NULL;
+              } else if (node->left == NULL) {
+              idPinjam *temp = node;
+              node = node->right;
+              free(temp);
+              } else if (node->right == NULL) {
+              idPinjam *temp = node;
+              node = node->left;
+              free(temp);
+              } else {
+              idPinjam *temp = node->right;
+              while (temp->left != NULL)
+                     temp = temp->left;
+              node->id = temp->id;
+              node->right = delete(node->right, temp->id, curr);
+              }
+       }
+       return node;
+}
+
 void pinjam(request **head , request **tail){
        request *newQueue = (request *)malloc(sizeof(request));
        printf("Masukkan nama peminjam: ");
