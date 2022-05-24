@@ -630,7 +630,7 @@ void approve(request **head, idPinjam **root, int idCount){
                      switch (choice) {
                             case 1:
                                     idCount++;
-                                    insert((*root), idCount, (*head));
+                                    (*root) = insert((*root), idCount, (*head));
                                     ubahStatusBukuDipinjam(*head);
                                     
                                    printf("Request Approved\n");
@@ -669,7 +669,7 @@ void kembalikanBuku(idPinjam **root){
     printf("\n"
     "Press any key to continue...\n");
     getch(); 
-}    
+}       
 
 
 int menu () {
@@ -728,6 +728,7 @@ void search(){
                         curr = curr->next;
                     }
                     printf("ID buku tidak ditemukan");
+                    
                    break;
             case 2:
                    printf("Masukkan judul buku: ");
@@ -832,6 +833,7 @@ void search(){
 
                 return;
        }
+       getch();
 }
 
 void printInorder(idPinjam* node)
@@ -856,7 +858,7 @@ void export_recursive(FILE *fp, idPinjam *node)
     if(node!=NULL)
     {
         export_recursive(fp, node->left);
-        fprintf(fp, "%s#%s#%s#%s#%s#%s#%d", node->judul, node->status, node->kontak, node->peminjam, node->tanggal, node->deadline, node->id);
+        fprintf(fp,"%s#%s#%s#%s#%s#%s#%d", node->judul, node->status, node->kontak, node->peminjam, node->tanggal, node->deadline, node->id);
         export_recursive(fp, node->right);
     }
 }
@@ -905,7 +907,7 @@ deallocate (idPinjam *node){
     deallocate(node->left);
     deallocate(node->right);
 
-    free(node);
+    free(&node);
 }
 
 int main()
@@ -929,6 +931,7 @@ int main()
                      break;
               case 4:
                      approve(&head, &root, idCount);
+                     
                      getch();
                      break;
               case 5:
@@ -938,7 +941,7 @@ int main()
                     export(root);
                     save_node();
                     freeList(headBook);
-                    deallocate(root);
+                    deallocate(&root);
                     return 0;
               default:
                      printf("Pilihan tidak tersedia\n");

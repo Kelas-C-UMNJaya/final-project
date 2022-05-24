@@ -1,25 +1,25 @@
-B025#Kebijakan Publik Di Indonesia#Riant Nugroho#16/01/2016#Pustaka Pelajar#Dipinjam
-B024#Geologi Lingkungan#Imam Subekti#17/09/2018#Mobius#Dipinjam
-B023#Akuntansi Pengantar 1#Supardi#08/07/2017#Gava Media#Dipinjam
-B022#Ilmu Ekonomi Mikro#Daryanto#15/04/2016#Bumi Aksara#Belum Dipinjam
-B021#Teknik Pengerjaan Listrik Edisi Revisi#Daryanto#15/04/2016#Bumi Aksara#Dipinjam
-B020#Strategi Meningkatkan Daya Baca#Bumi Aksara#23/03/2016#Nurhadi#Belum Dipinjam
-B019#Metode Penelitian Kuantitatif#Alfabeta#18/04/2018#Sugiyono#Belum Dipinjam
-B018#Metode Penelitian Kualitatif#Alfabeta#18/04/2017#Sugiyono#Belum Dipinjam
-B017#Struktur Data#Modula#02/08/2018#Rosa A.S#Belum Dipinjam
-B016#Dasar Pemrograman Python 3#Andi Publisher#05/08/2018#Abdul Kadir#Dipinjam
-B015#Teori Dan Praktek Sistem Operasi#Deepublish#05/05/2018#Zaid Romegar Mair#Belum Dipinjam
-B014#Dasar Basis Data Graf Dan Neo4J#Andi Offset#10/02/2020#Abdul Kadir#Belum Dipinjam
-B013#Menguasai Pemrograman Berorientasi Objek#Informatika#20/12/2020#Ade Rahmat Iskandar#Belum Dipinjam
-B012#Metodologi Pengembangan Sistem Informasi#Indeks#20/12/2017#Samiaji Sarosa, Ph.D#Dipinjam
-B011#Perancangan Basis Data Teori#Deepublish#22/09/2020#Suhartini, S.Kom.#Belum Dipinjam
-B004#PHP Programming#UI#01/01/2020#Adi#Belum Dipinjam
-B002#Algoritma Bagi Pemula#Gajah Mada#01/01/2020#Dana#Belum Dipinjam
-B006#Golang Google#ITB#01/01/2020#Felix#Belum Dipinjam
-B010#Geometry#Erlangga#08/05/2012#Jessica Wolk-Stanley#Dipinjam
-B003#Javascript Programming#Gajah Mada#01/01/2020#Mulya#Belum Dipinjam
-B005#C/C++ Programming#ITB#01/01/2020#Nugraha#Belum Dipinjam
-B001#Algoritma dan Struktur Data#Gajah Mada#01/01/2020#Raja#Dipinjam
-B007#Becak#Singa#02/02/2020#Ratu#Belum Dipinjam
-B009#Aljabar Linear dan Aplikasinya Edisi 5#Erlangga#08/05/2001#Steven J. Leon#Belum Dipinjam
 B008#Kalkulus Thomas Edisi 13#Erlangga#08/05/2017#Thomas#Belum Dipinjam
+B009#Aljabar Linear dan Aplikasinya Edisi 5#Erlangga#08/05/2001#Steven J. Leon#Belum Dipinjam
+B007#Becak#Singa#02/02/2020#Ratu#Belum Dipinjam
+B001#Algoritma dan Struktur Data#Gajah Mada#01/01/2020#Raja#Belum Dipinjam
+B005#C/C++ Programming#ITB#01/01/2020#Nugraha#Belum Dipinjam
+B003#Javascript Programming#Gajah Mada#01/01/2020#Mulya#Belum Dipinjam
+B010#Geometry#Erlangga#08/05/2012#Jessica Wolk-Stanley#Dipinjam
+B006#Golang Google#ITB#01/01/2020#Felix#Dipinjam
+B002#Algoritma Bagi Pemula#Gajah Mada#01/01/2020#Dana#Belum Dipinjam
+B004#PHP Programming#UI#01/01/2020#Adi#Belum Dipinjam
+B011#Perancangan Basis Data Teori#Deepublish#22/09/2020#Suhartini, S.Kom.#Belum Dipinjam
+B012#Metodologi Pengembangan Sistem Informasi#Indeks#20/12/2017#Samiaji Sarosa, Ph.D#Dipinjam
+B013#Menguasai Pemrograman Berorientasi Objek#Informatika#20/12/2020#Ade Rahmat Iskandar#Belum Dipinjam
+B014#Dasar Basis Data Graf Dan Neo4J#Andi Offset#10/02/2020#Abdul Kadir#Belum Dipinjam
+B015#Teori Dan Praktek Sistem Operasi#Deepublish#05/05/2018#Zaid Romegar Mair#Belum Dipinjam
+B016#Dasar Pemrograman Python 3#Andi Publisher#05/08/2018#Abdul Kadir#Dipinjam
+B017#Struktur Data#Modula#02/08/2018#Rosa A.S#Belum Dipinjam
+B018#Metode Penelitian Kualitatif#Alfabeta#18/04/2017#Sugiyono#Belum Dipinjam
+B019#Metode Penelitian Kuantitatif#Alfabeta#18/04/2018#Sugiyono#Belum Dipinjam
+B020#Strategi Meningkatkan Daya Baca#Bumi Aksara#23/03/2016#Nurhadi#Belum Dipinjam
+B021#Teknik Pengerjaan Listrik Edisi Revisi#Daryanto#15/04/2016#Bumi Aksara#Dipinjam
+B022#Ilmu Ekonomi Mikro#Daryanto#15/04/2016#Bumi Aksara#Belum Dipinjam
+B023#Akuntansi Pengantar 1#Supardi#08/07/2017#Gava Media#Dipinjam
+B024#Geologi Lingkungan#Imam Subekti#17/09/2018#Mobius#Dipinjam
+B025#Kebijakan Publik Di Indonesia#Riant Nugroho#16/01/2016#Pustaka Pelajar#Dipinjam
