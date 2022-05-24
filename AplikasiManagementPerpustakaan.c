@@ -223,15 +223,15 @@ void printSort()
 {
 	curr = headBook;
 	printf("\n");
-	printf("======================================================================================================================\n");
-	printf("|                                                     DATA BUKU                                                      |\n");
-	printf("======================================================================================================================\n");
+	printf("================================================================================================================================\n");
+	printf("|                                                            DATA BUKU                                                         |\n");
+	printf("================================================================================================================================\n");
 	
 	while(curr != NULL)
 	{
 		struct bookData hasil = curr->buku;
 		
-		printf("| %s | %-40s | %-10s | %-10s | %-20s | %-15s |\n", hasil.id, hasil.judul,
+		printf("| %s | %-40s | %-20s | %-10s | %-20s | %-15s |\n", hasil.id, hasil.judul,
            hasil.penerbit, hasil.tanggal, hasil.author, hasil.status);
         
         curr = curr->next;
@@ -485,6 +485,15 @@ void ubahStatusBukudDikembalikan (idPinjam *node) {
     }
 }
 
+int confirmDelete (idPinjam *node) {
+    int confirm;
+    printf("%d %s %s %s %s %s %s\n", node->id, node->judul, node->status, node->kontak, node->peminjam, node->tanggal, node->deadline);
+    printf("Confirm pengembalian?\n"
+            "1. Ya\n"
+            "2. Tidak\n");
+            scanf("%d", &confirm);
+    return confirm;
+}
 
 
 idPinjam *delete( idPinjam *node, int id) {
@@ -495,28 +504,40 @@ idPinjam *delete( idPinjam *node, int id) {
               node->right = delete(node->right, id);
        else {
               if (node->left == NULL && node->right == NULL) {
-              ubahStatusBukudDikembalikan(node);
-              free(node);
-              node = NULL;
+                  if(confirmDelete(node) == 1) {
+                    ubahStatusBukudDikembalikan(node);
+                    free(node);
+                    return NULL;
+                  } else return node;
               } else if (node->left == NULL) {
-              ubahStatusBukudDikembalikan(node);
-              idPinjam *temp = node;
-              node = node->right;
-              free(temp);
+                  if(confirmDelete(node) == 1) {
+                    ubahStatusBukudDikembalikan(node);
+                    idPinjam *temp = node->right;
+                    free(node);
+                  } else return node;
               } else if (node->right == NULL) {
-              ubahStatusBukudDikembalikan(node);
-              idPinjam *temp = node;
-              node = node->left;
-              free(temp);
+                  if(confirmDelete(node) == 1) {
+                      ubahStatusBukudDikembalikan(node);
+                        idPinjam *temp = node;
+                        node = node->left;
+                        free(temp);
+                  } else return node;
+              
               } else {
-              ubahStatusBukudDikembalikan(node);
-              idPinjam *temp = node->right;
-              while (temp->left != NULL)
-                     temp = temp->left;
-              node->id = temp->id;
-              node->right = delete(node->right, temp->id);
+                  if (confirmDelete (node) == 1) {
+                      ubahStatusBukudDikembalikan(node);
+                        idPinjam *temp = node->right;
+                        while (temp->left != NULL)
+                                temp = temp->left;
+                        node->id = temp->id;
+                        node->right = delete(node->right, temp->id);
+                  } else return node;
               }
+            printf("buku sudah dikembalikan\n");
+            printf("\n"
+            "Press any key to continue...\n");
        }
+       
        return node;
 }
 
@@ -665,9 +686,7 @@ void kembalikanBuku(idPinjam **root){
     printf("Masukkan ID buku yang ingin dikembalikan: ");
     scanf("%d", &id);
     delete((*root), id);
-    printf("buku sudah dikembalikan\n");
-    printf("\n"
-    "Press any key to continue...\n");
+    
     getch(); 
 }       
 
@@ -885,6 +904,7 @@ void save_node(){
         fclose(fp);
     }
 }
+
 void freeList(allBook* head)
 {
    allBook* tmp;

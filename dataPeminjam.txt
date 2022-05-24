@@ -1,6 +1,4 @@
-Algoritma dan Struktur Data#Sedang dipinjam#085935208094#Joe#24-05-2022#24-06-2022#1
 
-Geometry#Sedang dipinjam#08455553332#Jolyne#24-05-2022#24-06-2022#2
 
 Dasar Pemrograman Python 3#Sedang dipinjam#08467553332#Abachio#24-05-2022#24-06-2022#3
 
@@ -12,5 +10,4 @@ Akuntansi Pengantar 1#Sedang dipinjam#08421553332#Dio#24-05-2022#24-06-2022#6
 
 Metodologi Pengembangan Sistem Informasi#Sedang dipinjam#08455843332#reyna#24-05-2022#24-06-2022#7
 
-Geologi Lingkungan#sedang dipinjam#1235555433#Aldo#24-05-2022#07-06-2022#8
-Golang Google#sedang dipinjam#123#Leo#24-05-2022#07-06-2022#9
+Geologi Lingkungan#sedang dipinjam#1235555433#Aldo#24-05-2022#07-06-2022#8Becak#sedang dipinjam#08532324545#Leonardo#24-05-2022#07-06-2022#9
